@@ -1,15 +1,23 @@
-.comment {
-    background-color: #f0f4f8;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 8px;
+body {
+    font-family: Arial, sans-serif;
   }
-  
-  .reply {
-    background-color: #e0e7ff;
-    padding: 8px;
-    border-radius: 6px;
-    margin-left: 20px;
-    margin-top: 4px;
+  .container {
+    background-color: #f7fafc;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  input[type="text"] {
+    border: 1px solid #cbd5e0;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus {
+    border-color: #3182ce;
+  }
+  button {
+    background-color: #ce31cb;
+    transition: background-color 0.2s;
+  }
+  button:hover {
+    background-color: #63b3ed;
   }
   

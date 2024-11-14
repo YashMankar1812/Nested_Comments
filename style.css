@@ -1,0 +1,15 @@
+.comment {
+    background-color: #f0f4f8;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+  
+  .reply {
+    background-color: #e0e7ff;
+    padding: 8px;
+    border-radius: 6px;
+    margin-left: 20px;
+    margin-top: 4px;
+  }
+  

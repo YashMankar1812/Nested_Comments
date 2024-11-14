@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nested Comment App</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 p-8">
+  <div class="container mx-auto max-w-2xl">
+    <h1 class="text-2xl font-semibold mb-4">Nested Comment Application</h1>
+    
+    <!-- Comment Input Section -->
+    <div class="mb-4">
+      <input type="text" id="commentInput" class="border p-2 w-full rounded" placeholder="Add a comment">
+      <button onclick="addComment()" class="bg-blue-500 text-white p-2 mt-2 rounded">Post Comment</button>
+    </div>
+
+    <!-- Comment Section -->
+    <div id="commentSection" class="space-y-4"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

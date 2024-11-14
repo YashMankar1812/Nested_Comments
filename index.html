@@ -3,41 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nested Comment App</title>
+  <title>Nested Comment</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 p-8">
-  <div class="container mx-auto max-w-2xl">
-    <h1 class="text-2xl font-semibold mb-4">Nested Comment </h1>
+<body class="bg-pink-100 p-4 sm:p-8">
+  <div class="container mx-auto max-w-full sm:max-w-2xl">
+    <h1 class="text-2xl sm:text-4xl font-semibold mb-4 text-center">Nested Comment App</h1>
 
     <!-- Initial Comment -->
-    <div class="bg-gray-200 p-4 rounded shadow mb-4">
-      <div class="flex space-x-4">
-        <img class="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-1024.png" alt="User Profile Picture">
+    <div class="bg-purple-200 p-3 sm:p-4 rounded shadow mb-4" id="initial-comment">
+      <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+        <img class="w-10 h-10 rounded-full mx-auto sm:mx-0" src="https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-1024.png" alt="User Profile Picture">
         <div>
-          <div class="font-semibold">Yash Mankar</div>
-          <p class="text-gray-700 mt-1">Welcome! You can reply to the comments. But you can't delete the initial comment.</p>
-          <button onclick="showReplyInput('initial')" class="text-sm text-blue-500 mt-2">Reply</button>
+          <div class="font-semibold text-center sm:text-left">Yash Mankar</div>
+          <p class="text-gray-700 mt-1 text-center sm:text-left">Welcome! You can reply to the comments. But you can't delete the initial comment.</p>
+          <button onclick="showReplyInput('initial-comment')" class="text-sm text-blue-500 font-semibold mt-2 block text-center sm:text-left">Reply</button>
         </div>
       </div>
 
       <!-- Reply Input Section for Initial Comment -->
-      <div id="replyInputContainer-initial" class="hidden mt-4 ml-12">
-        <input type="text" id="usernameInput-initial" class="border p-2 w-full rounded mb-2" placeholder="Your name">
-        <input type="text" id="replyInput-initial" class="border p-2 w-full rounded mb-2" placeholder="Write a reply...">
-        <div class="flex space-x-2">
-          <button onclick="addComment('initial')" class="bg-blue-500 text-white p-1 rounded">Post</button>
-          <button onclick="hideReplyInput('initial')" class="text-gray-500 p-1">Cancel</button>
+      <div id="replyInputContainer-initial-comment" class="hidden mt-4 ml-0 sm:ml-12">
+        <input type="text" id="usernameInput-initial-comment" class="border p-2 w-full rounded mb-2" placeholder="Your name">
+        <input type="text" id="replyInput-initial-comment" class="border p-2 w-full rounded mb-2" placeholder="Write a reply...">
+        <div class="flex space-x-2 justify-center sm:justify-start">
+          <button onclick="addComment('initial-comment')" class="bg-green-500 text-white p-2 rounded font-semibold">Post</button>
+          <button onclick="hideReplyInput('initial-comment')" class="bg-red-500 text-white p-2 rounded">Cancel</button>
         </div>
       </div>
 
       <!-- Replies for the Initial Comment -->
-      <div id="replies-initial" class="mt-4 space-y-4 ml-12"></div>
+      <div id="replies-initial-comment" class="mt-4 space-y-4 ml-0 sm:ml-12"></div>
     </div>
-
-    <!-- Comment Section for User Comments -->
-    <div id="commentSection" class="space-y-4"></div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    function showReplyInput(commentId) {
+      document.getElementById(`replyInputContainer-${commentId}`).classList.remove('hidden');
+    }
+
+    function hideReplyInput(commentId) {
+      document.getElementById(`replyInputContainer-${commentId}`).classList.add('hidden');
+    }
+
+    function addComment(parentId) {
+      const username = document.getElementById(`usernameInput-${parentId}`).value;
+      const replyText = document.getElementById(`replyInput-${parentId}`).value;
+
+      if (username && replyText) {
+        const replyContainer = document.createElement('div');
+        replyContainer.className = 'flex flex-col sm:flex-row space-y-4 sm:space-x-4';
+        const uniqueId = `comment-${Date.now()}`;  // Unique ID for each comment
+        replyContainer.id = uniqueId;
+
+        replyContainer.innerHTML = `
+          <img class="w-8 h-8 rounded-full mx-auto sm:mx-0" src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/malecostume-512.png" alt="User Profile Picture">
+          <div class="p-2">
+            <div class="font-semibold text-center sm:text-left">${username}</div>
+            <p class="text-gray-700 mt-1 text-center sm:text-left" id="comment-text-${uniqueId}">${replyText}</p>
+            <div class="flex space-x-2 justify-center sm:justify-start mt-2">
+              <button onclick="showReplyInput('${uniqueId}')" class="text-sm text-blue-500 font-semibold">Reply</button>
+              <button onclick="editComment('${uniqueId}')" class="text-sm text-yellow-500 font-semibold">Edit</button>
+              <button onclick="deleteComment('${uniqueId}')" class="text-sm text-red-500 font-semibold">Delete</button>
+            </div>
+
+            <!-- Nested Reply Input Section -->
+            <div id="replyInputContainer-${uniqueId}" class="hidden mt-4 ml-0 sm:ml-12">
+              <input type="text" id="usernameInput-${uniqueId}" class="border p-2 w-full rounded mb-2" placeholder="Your name">
+              <input type="text" id="replyInput-${uniqueId}" class="border p-2 w-full rounded mb-2" placeholder="Write a reply...">
+              <div class="flex space-x-2 justify-center sm:justify-start">
+                <button onclick="addComment('${uniqueId}')" class="bg-green-500 text-white p-2 rounded font-semibold">Post</button>
+                <button onclick="hideReplyInput('${uniqueId}')" class="bg-red-500 text-white p-2 rounded">Cancel</button>
+              </div>
+            </div>
+
+            <!-- Container for Nested Replies -->
+            <div id="replies-${uniqueId}" class="mt-4 space-y-4 ml-0 sm:ml-12"></div>
+          </div>
+        `;
+
+        document.getElementById(`replies-${parentId}`).appendChild(replyContainer);
+        document.getElementById(`usernameInput-${parentId}`).value = '';
+        document.getElementById(`replyInput-${parentId}`).value = '';
+        hideReplyInput(parentId);
+      }
+    }
+
+    function editComment(commentId) {
+      const commentTextElement = document.getElementById(`comment-text-${commentId}`);
+      const currentText = commentTextElement.textContent;
+
+      commentTextElement.innerHTML = `
+        <input type="text" id="editInput-${commentId}" class="border p-2 w-full rounded" value="${currentText}">
+        <button onclick="saveEdit('${commentId}')" class="bg-green-500 text-white p-1 rounded mt-2">Save</button>
+        <button onclick="cancelEdit('${commentId}', '${currentText}')" class="bg-red-500 text-white p-2 rounded">Cancel</button>
+      `;
+    }
+
+    function saveEdit(commentId) {
+      const newText = document.getElementById(`editInput-${commentId}`).value;
+      document.getElementById(`comment-text-${commentId}`).textContent = newText;
+    }
+
+    function cancelEdit(commentId, originalText) {
+      document.getElementById(`comment-text-${commentId}`).textContent = originalText;
+    }
+
+    function deleteComment(commentId) {
+      document.getElementById(commentId).remove();
+    }
+  </script>
 </body>
 </html>
